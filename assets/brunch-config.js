@@ -52,7 +52,8 @@ exports.config = {
   	}
     babel: {
       // Do not use ES6 compiler in vendor code
-      ignore: [/vendor/]
+      ignore: [/vendor/],
+      presets: ['env', 'react']
     }
   },
 
@@ -66,6 +67,7 @@ exports.config = {
     enabled: true,
     npm: {
     	globals: {
+    		_: 'underscore',
     		$: 'jquery'
     	}
     }
