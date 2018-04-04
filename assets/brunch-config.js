@@ -44,15 +44,16 @@ exports.config = {
 
   // Configure your plugins
   plugins: {
-  	sass: {
-  		options: {
-  			includePaths: ["node_modules/bootstrap/scss"],
-  			precision: 8
-  		}
-  	}
     babel: {
       // Do not use ES6 compiler in vendor code
-      ignore: [/vendor/]
+      ignore: [/vendor/],
+      presets: ['env', 'react'],
+    },
+    sass: {
+      options: {
+        includePaths: ["node_modules/bootstrap/scss"],
+        precision: 8,
+      }
     }
   },
 
@@ -64,10 +65,9 @@ exports.config = {
 
   npm: {
     enabled: true,
-    npm: {
-    	globals: {
-    		$: 'jquery'
-    	}
+    globals: {
+      _: 'underscore',
+      $: 'jquery'
     }
   }
 };
