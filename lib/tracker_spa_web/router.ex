@@ -18,6 +18,7 @@ defmodule TrackerSpaWeb.Router do
 
     get "/", PageController, :index
     get "/users", PageController, :index
+    get "/register", PageController, :index
     get "/tasks", PageController, :index
     get "/users/:id", PageController, :index
   end

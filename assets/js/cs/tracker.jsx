@@ -6,9 +6,11 @@ import { Provider, connect } from 'react-redux';
 import Users from './users';
 import Nav from './nav';
 import Feed from './feed';
+import Register from './register';
 import TaskForm from './task-form';
 
 export default function tracker_init(store) {
+	console.log(store, "startstore");
 	ReactDOM.render(
     <Provider store={store}>
       <Tracker state={store.getState()} />
@@ -21,20 +23,32 @@ let Tracker = connect((state) => state)((props) => {
 	return (
 		<Router>
 			<div>
-				<Nav />
 				<Route path="/" exact={true} render={() =>
           <div>
+          	<Nav />
             <TaskForm />
             <Feed tasks={props.tasks} />
           </div>
         } />
         <Route path="/users" exact={true} render={() =>
-          <Users users={props.tasks} />
+        	<div>
+	          <Nav />
+	          <Users users={props.tasks} />
+	        </div>
         } />
         <Route path="/users/:user_id" render={({match}) =>
-          <Feed tasks={_.filter(props.tasks, (pp) =>
-            match.params.user_id == pp.user.id )
-          } />
+        	<div>
+	          <Nav />
+	          <Feed tasks={_.filter(props.tasks, (pp) =>
+	            match.params.user_id == pp.user.id )
+	          } />
+	         </div>
+        } />
+        <Route path="/register" exact={true} render={() =>
+        	<div>
+	          <Nav />
+          	<Register />
+          </div>
         } />
 			</div>
 		</Router>

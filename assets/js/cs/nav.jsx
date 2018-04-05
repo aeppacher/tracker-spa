@@ -37,33 +37,40 @@ let LoginForm = connect(({login}) => {return {login};})((props) => {
 
 let Session = connect(({token}) => {return {token};})((props) => {
   return <div className="navbar-text">
+  	{console.log(props.token)}
     User id = { props.token.user_id }
   </div>;
 });
 
 function Nav(props) {
   let session_info;
+  let nav_options;
 
   if (props.token) {
     session_info = <Session token={props.token} />;
-  }
-  else {
-    session_info = <LoginForm />
-  }
-
-  return (
-    <nav className="navbar navbar-dark bg-dark navbar-expand">
-      <span className="navbar-brand">
-        μBlog
-      </span>
-      <ul className="navbar-nav mr-auto">
+    nav_options = <ul className="navbar-nav mr-auto">
         <NavItem>
           <NavLink to="/" exact={true} activeClassName="active" className="nav-link">Feed</NavLink>
         </NavItem>
         <NavItem>
           <NavLink to="/users" href="#" className="nav-link">All Users</NavLink>
         </NavItem>
-      </ul>
+        <NavItem>
+          <NavLink to="/register" href="#" className="nav-link">Register</NavLink>
+        </NavItem>
+      </ul>;
+  }
+  else {
+  	nav_options = <ul className="navbar-nav mr-auto"> </ul>;
+    session_info = <LoginForm className="navbar-text"/>;
+  }
+
+  return (
+    <nav className="navbar navbar-dark bg-dark navbar-expand">
+      <span className="navbar-brand">
+        Tracker
+      </span>
+      { nav_options }
       { session_info }
     </nav>
   );
