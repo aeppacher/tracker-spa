@@ -13,7 +13,7 @@ export default function Register(params) {
       <FormGroup>
         <Input type="password" name="pass" placeholder="password"/>
       </FormGroup>
-      <Button>Register</Button>
+      <Button>Registe</Button>
     </Form>
   </div>);
 }
