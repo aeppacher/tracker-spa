@@ -21,6 +21,12 @@ defmodule TrackerSpa.Users do
     Repo.all(User)
   end
 
+  def get_and_auth_user(name, pass) do
+    IO.puts("here")
+    user = Repo.one(from u in User, where: u.name == ^name)
+    Comeonin.Argon2.check_pass(user, pass)
+  end
+
   @doc """
   Gets a single user.
 
