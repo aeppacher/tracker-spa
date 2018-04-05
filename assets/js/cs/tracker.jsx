@@ -46,7 +46,7 @@ let Tracker = connect((state) => state)((props) => {
         } />
         <Route path="/register" exact={true} render={() =>
         	<div>
-	          <Nav />
+	          <Nav type="register"/>
           	<Register />
           </div>
         } />
