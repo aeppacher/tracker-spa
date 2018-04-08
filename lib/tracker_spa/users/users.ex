@@ -21,9 +21,8 @@ defmodule TrackerSpa.Users do
     Repo.all(User)
   end
 
-  def get_and_auth_user(name, pass) do
-    IO.puts("here")
-    user = Repo.one(from u in User, where: u.name == ^name)
+  def get_and_auth_user(email, pass) do
+    user = Repo.one(from u in User, where: u.email == ^email)
     Comeonin.Argon2.check_pass(user, pass)
   end
 
@@ -41,7 +40,10 @@ defmodule TrackerSpa.Users do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    IO.puts("get user")
+    Repo.get!(User, id)
+  end
 
   @doc """
   Creates a user.
@@ -56,6 +58,11 @@ defmodule TrackerSpa.Users do
 
   """
   def create_user(attrs \\ %{}) do
+    hash = Comeonin.Argon2.hashpwsalt(Map.get(attrs, "pass"))
+    attrs = Map.drop(attrs, ["pass"])
+    attrs = Map.put(attrs, "password_hash", hash)
+    IO.puts(Kernel.inspect(attrs))
+
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()

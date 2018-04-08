@@ -42,7 +42,8 @@ defmodule TrackerSpa.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.0"},
-      {:argon2_elixir, "~> 1.2"}
+      {:argon2_elixir, "~> 1.2"},
+      {:elixir_make, "~> 0.4.1"}
     ]
   end
 

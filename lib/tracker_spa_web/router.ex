@@ -19,8 +19,11 @@ defmodule TrackerSpaWeb.Router do
     get "/", PageController, :index
     get "/users", PageController, :index
     get "/register", PageController, :index
+    get "/login", PageController, :index
     get "/tasks", PageController, :index
     get "/users/:id", PageController, :index
+    get "/feed", PageController, :index
+    get "/new-task", PageController, :index
   end
 
   # Other scopes may use custom stacks.
@@ -29,6 +32,7 @@ defmodule TrackerSpaWeb.Router do
   # end
   scope "/api/v1", TrackerSpaWeb do
     pipe_through :api
+    resources "/manages", ManageController, except: [:new, :edit]
   	resources "/users", UserController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
     post "/token", TokenController, :create

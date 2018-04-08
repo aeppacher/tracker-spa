@@ -13,7 +13,8 @@ defmodule TrackerSpaWeb.TaskView do
 
   def render("task.json", %{task: task}) do
     %{id: task.id,
-      body: task.body,
+      title: task.title,
+      description: task.description,
       user: render_one(task.user, UserView, "user.json")}
   end
 end

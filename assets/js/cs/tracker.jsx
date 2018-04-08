@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
 
 import Users from './users';
@@ -8,6 +8,7 @@ import Nav from './nav';
 import Feed from './feed';
 import Register from './register';
 import TaskForm from './task-form';
+import Login from './login';
 
 export default function tracker_init(store) {
 	console.log(store, "startstore");
@@ -20,20 +21,20 @@ export default function tracker_init(store) {
 }
 
 let Tracker = connect((state) => state)((props) => {
+	let login = props.token == null ? <Redirect to="/login" /> : <Redirect to="/feed" />;
+
 	return (
 		<Router>
 			<div>
 				<Route path="/" exact={true} render={() =>
           <div>
-          	<Nav />
-            <TaskForm />
-            <Feed tasks={props.tasks} />
+          	{login}
           </div>
         } />
         <Route path="/users" exact={true} render={() =>
         	<div>
 	          <Nav />
-	          <Users users={props.tasks} />
+	          <Users users={props.users} token={props.token}/>
 	        </div>
         } />
         <Route path="/users/:user_id" render={({match}) =>
@@ -46,8 +47,26 @@ let Tracker = connect((state) => state)((props) => {
         } />
         <Route path="/register" exact={true} render={() =>
         	<div>
-	          <Nav type="register"/>
+	          <Nav />
           	<Register />
+          </div>
+        } />
+        <Route path="/login" exact={true} render={() =>
+          <div>
+            <Nav />
+            <Login />
+          </div>
+        } />
+        <Route path="/feed" exact={true} render={() =>
+          <div>
+            <Nav />
+            <Feed tasks={props.tasks} token={props.token}/>
+          </div>
+        } />
+        <Route path="/new-task" exact={true} render={() =>
+          <div>
+            <Nav />
+            <TaskForm />
           </div>
         } />
 			</div>

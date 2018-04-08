@@ -4,7 +4,8 @@ defmodule TrackerSpa.Tasks.Task do
 
 
   schema "tasks" do
-    field :body, :string
+  	field :title, :string
+  	field :description, :string
     belongs_to :user, TrackerSpa.Users.User
 
     timestamps()
@@ -13,7 +14,7 @@ defmodule TrackerSpa.Tasks.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:body, :user_id])
-    |> validate_required([:body, :user_id])
+    |> cast(attrs, [:description, :title, :user_id])
+    |> validate_required([:description, :title, :user_id])
   end
 end

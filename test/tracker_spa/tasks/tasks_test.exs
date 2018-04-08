@@ -62,4 +62,62 @@ defmodule TrackerSpa.TasksTest do
       assert %Ecto.Changeset{} = Tasks.change_task(task)
     end
   end
+
+  describe "manages" do
+    alias TrackerSpa.Tasks.Manage
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def manage_fixture(attrs \\ %{}) do
+      {:ok, manage} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Tasks.create_manage()
+
+      manage
+    end
+
+    test "list_manages/0 returns all manages" do
+      manage = manage_fixture()
+      assert Tasks.list_manages() == [manage]
+    end
+
+    test "get_manage!/1 returns the manage with given id" do
+      manage = manage_fixture()
+      assert Tasks.get_manage!(manage.id) == manage
+    end
+
+    test "create_manage/1 with valid data creates a manage" do
+      assert {:ok, %Manage{} = manage} = Tasks.create_manage(@valid_attrs)
+    end
+
+    test "create_manage/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tasks.create_manage(@invalid_attrs)
+    end
+
+    test "update_manage/2 with valid data updates the manage" do
+      manage = manage_fixture()
+      assert {:ok, manage} = Tasks.update_manage(manage, @update_attrs)
+      assert %Manage{} = manage
+    end
+
+    test "update_manage/2 with invalid data returns error changeset" do
+      manage = manage_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tasks.update_manage(manage, @invalid_attrs)
+      assert manage == Tasks.get_manage!(manage.id)
+    end
+
+    test "delete_manage/1 deletes the manage" do
+      manage = manage_fixture()
+      assert {:ok, %Manage{}} = Tasks.delete_manage(manage)
+      assert_raise Ecto.NoResultsError, fn -> Tasks.get_manage!(manage.id) end
+    end
+
+    test "change_manage/1 returns a manage changeset" do
+      manage = manage_fixture()
+      assert %Ecto.Changeset{} = Tasks.change_manage(manage)
+    end
+  end
 end

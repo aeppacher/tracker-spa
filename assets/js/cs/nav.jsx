@@ -2,43 +2,24 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Form, FormGroup, NavItem, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
-import api from '../api';
 
 let LoginForm = connect(({login}) => {return {login};})((props) => {
-  function update(ev) {
-    let tgt = $(ev.target);
-    let data = {};
-    data[tgt.attr('name')] = tgt.val();
-    props.dispatch({
-      type: 'UPDATE_LOGIN_FORM',
-      data: data,
-    });
-  }
-
-  function create_token(ev) {
-    api.submit_login(props.login);
-    console.log(props.login);
-  }
-
   return <div className="navbar-text">
-    <Form inline>
-      <FormGroup>
-        <Input type="text" name="name" placeholder="name"
-               value={props.login.name} onChange={update} />
-      </FormGroup>
-      <FormGroup>
-        <Input type="password" name="pass" placeholder="password"
-               value={props.login.pass} onChange={update} />
-      </FormGroup>
-      <Button onClick={create_token}>Log In</Button>
-    </Form>
+    <button type="button" className="btn btn-link" >
+      <NavLink to="/login" >Log in</NavLink>
+    </button>
   </div>;
 });
+
+function remove_token(ev) {
+  window.document.location.href="/";
+}
 
 let Session = connect(({token}) => {return {token};})((props) => {
   return <div className="navbar-text">
   	{console.log(props.token)}
-    User id = { props.token.user_id }
+    { props.token.user_name }
+    <button type="button" className="btn btn-link" onClick={remove_token}>Log out</button>
   </div>;
 });
 
@@ -47,7 +28,7 @@ function Nav(props) {
   let nav_options;
 
   if (props.token) {
-    session_info = <Session token={props.token} />;
+    session_info = <Session />;
     nav_options = <ul className="navbar-nav mr-auto">
         <NavItem>
           <NavLink to="/" exact={true} activeClassName="active" className="nav-link">Feed</NavLink>
@@ -56,7 +37,7 @@ function Nav(props) {
           <NavLink to="/users" href="#" className="nav-link">All Users</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink to="/register" href="#" className="nav-link">Register</NavLink>
+          <NavLink to="/new-task" href="#" className="nav-link">New Task</NavLink>
         </NavItem>
       </ul>;
   }
@@ -77,6 +58,7 @@ function Nav(props) {
 }
 
 function dispatchToProps(state) {
+  console.log("rerender nav");
   return {
     token: state.token,
   };
