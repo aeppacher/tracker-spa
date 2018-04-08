@@ -19,6 +19,7 @@ let RegisterForm = connect(({register}) => {return {register};})((props) => {
 
   function create_new_user(ev) {
     api.submit_user(props.register);
+    window.document.location.href="/";
   }
   
   return (
